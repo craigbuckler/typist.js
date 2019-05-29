@@ -1,6 +1,6 @@
 # typist.js
 
-typist.js shows a typing effect which can be applied to any HTML element or parent element.
+typist.js shows a typing effect which can be applied to any HTML element or parent element - **[see demonstration at Codepen.io](https://codepen.io/craigbuckler/full/eaLwVY)**.
 
 Please use the code as you wish - [tweet me @craigbuckler](https://twitter.com/craigbuckler) if you find it useful.
 
