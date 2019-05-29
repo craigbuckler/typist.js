@@ -1,0 +1,1 @@
+.typist.cursor:after{content:"";display:inline-block;vertical-align:baseline;width:2px;height:1em;margin:0 0 -.1em .07em;background-color:#c00;animation:cursorFlash 1s linear infinite}@keyframes cursorFlash{20%,80%{opacity:1}40%,60%{opacity:0}}
