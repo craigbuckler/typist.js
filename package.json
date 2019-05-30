@@ -1,5 +1,5 @@
 {
-  "name": "typistjs",
+  "name": "htmltypist.js",
   "version": "1.0.0",
   "description": "web page typing effect animation",
   "main": "dist/typist.js",

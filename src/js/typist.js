@@ -51,10 +51,10 @@ window.Typist = window.Typist || function(){};
 
     // get element
     T.element = arg.element || null;
-    if (!T.element || T.element.nodeType !== 1 || !T.element.dataset) return;
+    if (!T.element || T.element.nodeType !== 1 || !T.element.dataset || T.element.classList.contains(init.cls)) return;
 
     // set defaults
-    T.text = T.getText() || ds.text.split('|');
+    T.text = T.getText();
     if (!T.text.length) return;
 
     var ds = T.element.dataset;

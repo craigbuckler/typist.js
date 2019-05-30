@@ -15,7 +15,7 @@
 
     <h1 data-typist="1" data-sequence="start">typist.js</h1>
 
-    <p><a href="https://github.com/craigbuckler/typist.js">GitHub</a> | <a href="https://twitter.com/craigbuckler">@craigbuckler</a> | <a href="https://craigbuckler.com/">craigbuckler.com</a></p>
+    <p><a href="https://github.com/craigbuckler/typist.js"><strong>GitHub</strong></a> | <a href="https://www.npmjs.com/package/htmltypist.js"><strong>npm</strong></a> | <a href="https://gum.co/OWTuG"><strong>donate</strong></a> | <a href="https://twitter.com/craigbuckler">@craigbuckler</a> | <a href="https://craigbuckler.com/">craigbuckler.com</a></p>
 
     <p data-typist="" data-sequence="start">
       <span>typist.js shows a typing effect.</span>
@@ -26,12 +26,10 @@
 
     <p>typist.js can be applied to any HTML element or parent element to type the content.</p>
 
-    <p>Please use the code as you wish - <a href="https://twitter.com/craigbuckler">tweet me @craigbuckler</a> if you find it useful.</p>
-
-    <p>Benefits:</p>
+    <p>Please use the code as you wish. <a href="https://twitter.com/craigbuckler">Tweet me @craigbuckler</a> if you find it useful and <a href="https://gum.co/OWTuG">donate toward development</a> if you use it commercially.</p>
 
     <ul>
-      <li data-typist="1" data-delay-start="-1" data-sequence="benefit">lightweight: 2,600 bytes of JavaScript, 160 bytes of CSS</li>
+      <li data-typist="1" data-delay-start="-1" data-sequence="benefit">lightweight: 2,600 bytes of JavaScript, 160 bytes of optional CSS</li>
       <li data-typist="1" data-sequence="benefit">no external dependencies - works with any framework</li>
       <li data-typist="1" data-sequence="benefit">easy to configure from HTML or JavaScript</li>
       <li data-typist="1" data-sequence="benefit">works in all modern browsers (IE11+)</li>
@@ -40,12 +38,12 @@
 
     <h2>Basic example</h2>
 
-    <p>The page must load the CSS and JavaScript. It can be placed anywhere on the page but, typically, the CSS is loaded in the <code>&lt;head&gt;</code> and the JS is loaded just before the closing <code>&lt;/body&gt;</code> tag:</p>
+    <p>The page must load the CSS and JavaScript. It can be placed anywhere but, typically, the CSS is loaded in the <code>&lt;head&gt;</code> and the JS is loaded just before the closing <code>&lt;/body&gt;</code> tag:</p>
 
-    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/typist.css&quot;&gt;
-&lt;script src=&quot;dist/typist.js&quot;&gt;&lt;/script&gt;</code></pre>
+    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.0/dist/typist.css&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.0/dist/typist.js&quot;&gt;&lt;/script&gt;</code></pre>
 
-    <p><em>(A module bundler can also be used.)</em></p>
+    <p>CDN URLs are shown above but you can also <code>npm i htmltypist.js</code> to install via npm and use a bundler.</p>
 
     <p>To apply a typing effect to any element, add a <code>data-typist</code> attribute:</p>
 
@@ -153,11 +151,11 @@
 
     <pre><code>&lt;ul&gt;&#10;  &lt;li data-typist=&quot;1&quot; data-sequence=&quot;mylist&quot; data-delay-start=&quot;-1&quot;&gt;item one&lt;/li&gt;&#10;  &lt;li data-typist=&quot;1&quot; data-sequence=&quot;mylist&quot;&gt;item two&lt;/li&gt;&#10;  &lt;li data-typist=&quot;1&quot; data-sequence=&quot;mylist&quot;&gt;item three&lt;/li&gt;&#10;&lt;/ul&gt;</code></pre>
 
-    <p>The following code segments have the same result; an item is typed three times using a delay of 300-500ms between characters once it appears in view:</p>
+    <p>The following code types text three times using a delay of 300-500ms between characters once it appears in view:</p>
 
     <pre><code>&lt;p&#10;  data-typist=&quot;3&quot;&#10;  data-delay-start=&quot;-1&quot; &#10;  data-delay-type=&quot;400&quot; &#10;  data-delay-variance=&quot;100&quot;&gt;This will be typed.&lt;/p&gt;</code></pre>
 
-    <p>Alternatively:</p>
+    <p>This alternative is functionally identical:</p>
 
     <pre><code>&lt;p id=&quot;myelement&quot;&gt;This will be typed.&lt;/p&gt;&#10;&lt;script&gt;&#10;new Typist({&#10;  element: document.getElementById(&apos;myelement&apos;),&#10;  typist: 3,&#10;  delayStart: -1,&#10;  delayType: 400,&#10;  delayVariance: 100&#10;});&#10;&lt;/script&gt;</code></pre>
 

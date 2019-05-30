@@ -1,12 +1,12 @@
 # typist.js
 
-[**demonstration**](https://codepen.io/craigbuckler/full/eaLwVY) | [**@craigbuckler**](https://twitter.com/craigbuckler) | [**craigbuckler.com**](https://craigbuckler.com/)
+[**demonstration**](https://codepen.io/craigbuckler/full/eaLwVY) | [**GitHub**](https://github.com/craigbuckler/typist.js) | [**npm**](https://www.npmjs.com/package/htmltypist.js) | [**donate**](https://gum.co/OWTuG) | [@craigbuckler](https://twitter.com/craigbuckler) | [craigbuckler.com](https://craigbuckler.com/)
 
 typist.js shows a typing effect which can be applied to any HTML element or parent element.
 
-Please use the code as you wish - [tweet me @craigbuckler](https://twitter.com/craigbuckler) if you find it useful.
+Please use the code as you wish. [Tweet me @craigbuckler](https://twitter.com/craigbuckler) if you find it useful and [donate toward development](https://gum.co/OWTuG) if you use it commercially.
 
-* lightweight: 2,600 bytes of JavaScript, 245 bytes of CSS
+* lightweight: 2,600 bytes of JavaScript, 160 bytes of optional CSS
 * no external dependencies - works with any framework
 * easy to configure from HTML or JavaScript
 * works in all modern browsers (IE11+)
@@ -15,14 +15,14 @@ Please use the code as you wish - [tweet me @craigbuckler](https://twitter.com/c
 
 ## Basic example
 
-The page must load the CSS and JavaScript. It can be placed anywhere on the page but, typically, the CSS is loaded in the `<head>` and the JS is loaded just before the closing `</body>` tag:
+The page must load the CSS and JavaScript. It can be placed anywhere but, typically, the CSS is loaded in the `<head>` and the JS is loaded just before the closing `</body>` tag:
 
 ```html
-<link rel="stylesheet" href="dist/typist.css">
-<script src="dist/typist.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.0/dist/typist.css">
+<script src="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.0/dist/typist.js"></script>
 ```
 
-*(A module bundler can also be used.)*
+CDN URLs are shown above but you can also `npm i htmltypist.js` to install via npm and use a bundler.
 
 To apply a typing effect to any element, add a `data-typist` attribute:
 
@@ -88,7 +88,7 @@ The following named sequence example types each list item in turn when the first
 </ul>
 ```
 
-The following code segments have the same result; an item is typed three times using a delay of 300-500ms between characters once it appears in view:
+The following code types text three times using a delay of 300-500ms between characters once it appears in view:
 
 ```html
 <p
@@ -98,7 +98,7 @@ The following code segments have the same result; an item is typed three times u
   data-delay-variance="100">This will be typed.</p>
 ```
 
-Alternatively:
+This alternative is functionally identical:
 
 ```html
 <p id="myelement">This will be typed.</p>
