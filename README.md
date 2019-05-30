@@ -18,8 +18,8 @@ Please use the code as you wish. [Tweet me @craigbuckler](https://twitter.com/cr
 The page must load the CSS and JavaScript. It can be placed anywhere but, typically, the CSS is loaded in the `<head>` and the JS is loaded just before the closing `</body>` tag:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.0/dist/typist.css">
-<script src="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.0/dist/typist.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.1/dist/typist.css">
+<script src="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.1/dist/typist.js"></script>
 ```
 
 CDN URLs are shown above but you can also `npm i htmltypist.js` to install via npm and use a bundler.

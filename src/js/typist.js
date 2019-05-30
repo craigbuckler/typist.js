@@ -1,4 +1,4 @@
-// typist.js, v1.0.0
+// typist.js
 // by Craig Buckler, @craigbuckler
 
 window.Typist = window.Typist || function(){};
