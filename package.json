@@ -2,25 +2,27 @@
   "name": "typist.js",
   "version": "1.0.0",
   "description": "web page typing effect animation",
-  "main": "",
+  "main": "dist/typist.js",
+  "files": ["dist/typist.css"],
   "scripts": {
+    "build": "npm i && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "Craig Buckler",
+  "homepage": "https://github.com/craigbuckler/typist.js#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/craigbuckler/typist.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/craigbuckler/typist.js/issues"
   },
   "keywords": [
     "JavaScript",
     "typing",
     "effect"
   ],
-  "author": "Craig Buckler",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/craigbuckler/typist.js/issues"
-  },
-  "homepage": "https://github.com/craigbuckler/typist.js#readme",
   "devDependencies": {
     "autoprefixer": "^9.5.1",
     "cssnano": "^4.1.10",

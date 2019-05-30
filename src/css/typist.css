@@ -1,12 +1,8 @@
 /* typist CSS */
 .typist.cursor::after {
-  content: '';
-  display: inline-block;
-  vertical-align: baseline;
-  width: 2px;
-  height: 1em;
-  margin: 0 0 -0.1em 0.07em;
-  background-color: #c00;
+  content: '|';
+  font-weight: 600;
+  color: #c00;
   animation: cursorFlash 1s linear infinite;
 }
 
