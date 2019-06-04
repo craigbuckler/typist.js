@@ -9,9 +9,7 @@ const
     in: 'src/css/typist.css',
     out: 'dist/',
     process: [
-      require('autoprefixer')({
-        browsers: ['> 1%', 'ie 11']
-      }),
+      require('autoprefixer'),
       require('cssnano')
     ]
   },
