@@ -7,9 +7,12 @@ window.Typist = window.Typist || function(){};
 
   'use strict';
 
-  if (!window.addEventListener || !window.requestAnimationFrame) return;
+  var w = window, wa = w.addEventListener, d = document;
+
+  if (!wa || !w.requestAnimationFrame) return;
 
   var
+
     // defaults
     init = {
       element:        '[data-typist]',
@@ -22,25 +25,55 @@ window.Typist = window.Typist || function(){};
       delayEnd:       2000,
       viewThreshold:  1
     },
-    // intersection observer
-    observer = (window.IntersectionObserver && window.CustomEvent) ? new IntersectionObserver(
 
-      function(entries) {
+    // intersection observer object
+    observer = (!w.IntersectionObserver || !w.CustomEvent) ? null : new function() {
 
-        entries.forEach(function(entry) {
+      var
+        io = null,
+        element = [];
 
-          if (entry.intersectionRatio < init.viewThreshold) return;
+      // observe element
+      this.observe = function(e) {
+        if (io) io.observe(e);
+        else element.push(e);
+      };
 
-          // trigger event when element is in view
-          var event = new CustomEvent('typist', { detail: { element: entry.target }});
-          document.dispatchEvent(event);
+      // unobserve element
+      this.unobserve = function(e) {
+        if (io) io.unobserve(e);
+        else element = element.filter(function(a) { return a !== e; });
+      };
 
-        });
+      wa('load', function() {
 
-      },
-      { threshold: init.viewThreshold }
+        // intersection observer created after window load
+        io = new IntersectionObserver(
 
-    ) : null;
+          function(entries) {
+
+            entries.forEach(function(entry) {
+
+              if (entry.intersectionRatio < init.viewThreshold) return;
+
+              // trigger event when element is in view
+              var event = new CustomEvent('typist', { detail: { node: entry.target }});
+              d.dispatchEvent(event);
+
+            });
+
+          },
+          { threshold: init.viewThreshold }
+
+        );
+
+        // observe elements
+        var e;
+        while ((e = element.shift())) io.observe(e);
+
+      }, false);
+
+    };
 
 
   // typist object
@@ -50,50 +83,70 @@ window.Typist = window.Typist || function(){};
     arg = arg || {};
 
     // get element
-    T.element = arg.element || null;
-    if (!T.element || T.element.nodeType !== 1 || !T.element.dataset || T.element.classList.contains(init.cls)) return;
+    T.node = arg.element || null;
+    T.cl = T.node && T.node.classList;
+    if (!T.node || T.node.nodeType !== 1 || !T.node.dataset || T.cl.contains(init.cls)) return;
 
     // set defaults
-    T.text = T.getText();
+    T.text = getText();
     if (!T.text.length) return;
 
-    var ds = T.element.dataset;
-    T.repeat = parseFloat(arg.typist || ds.typist) || Infinity;
-    T.cursor = parseFloat(arg.cursor || ds.cursor) || init.cursor;
-    T.sequence = observer ? arg.sequence || ds.sequence : null;
+    var ds = T.node.dataset;
+    T.rep = 1 * (arg.typist || ds.typist) || Infinity;
+    T.cur = 1 * (arg.cursor || ds.cursor) || init.cursor;
+    T.seq = observer ? arg.sequence || ds.sequence : null;
 
-    T.delayStart = parseFloat(arg.delayStart || ds.delayStart) || init.delayStart;
-    T.delayType = parseFloat(arg.delayType || ds.delayType) || init.delayType;
-    T.delayEnd = parseFloat(arg.delayEnd || ds.delayEnd) || init.delayEnd;
-    T.delayVariance = parseFloat(arg.delayVariance || ds.delayVariance) || init.delayVariance;
+    T.dS = 1 * (arg.delayStart || ds.delayStart) || init.delayStart;
+    T.dT = 1 * (arg.delayType || ds.delayType) || init.delayType;
+    T.dE = 1 * (arg.delayEnd || ds.delayEnd) || init.delayEnd;
+    T.dV = 1 * (arg.delayVariance || ds.delayVariance) || init.delayVariance;
 
     // initialise
-    T.element.innerHTML = '';
-    T.element.classList.add(init.cls);
-    T.item = 0;
-    T.char = 0;
-    T.dir = 1;
+    T.node.innerHTML = '';
+    T.cl.add(init.cls);
+    T.i = 0;  // item number
+    T.c = 0;  // character number
+    T.d = 1;  // text direction
 
-    // start typing
-    if (!observer || (T.delayStart >= 0 && !T.sequence)) T.start();
+    // start typing?
+    if (!observer || (T.dS >= 0 && !T.seq)) T.start();
     else {
 
       // wait until element is in view
-      observer.observe(T.element);
+      if (T.dS < 0 || T.node === seqFirst()) observer.observe(T.node);
 
-      // element in view
-      document.addEventListener('typist', function(e) {
+      // element in view or in sequence
+      d.addEventListener('typist', function(e) {
 
-        if (
-          (!T.sequence && e.detail.element === T.element) ||
-          document.querySelector('[data-sequence="' + T.sequence + '"]') === T.element
-        ) {
+        if (e.detail.node === T.node || (T.seq === e.detail.seq && T.node === seqFirst())) {
 
-          observer.unobserve(T.element);
+          observer.unobserve(T.node);
           T.start();
 
         }
       }, false);
+
+    }
+
+    // return first node in sequence
+    function seqFirst() {
+      return T.seq ? d.querySelector('[data-sequence="' + T.seq + '"]') : 0;
+    }
+
+    // fetch text items to type
+    function getText() {
+
+      var text = [], child = T.node.children, e;
+
+      for (e = 0; e < child.length; e++) addText(child[e]);
+      if (!text.length) addText(T.node);
+
+      return text.length ? text : null;
+
+      function addText(e) {
+        var t = e.textContent.trim();
+        if (t) text.push(t);
+      }
 
     }
 
@@ -105,93 +158,71 @@ window.Typist = window.Typist || function(){};
 
     var T = this;
 
-    if (T.started) return;
-    T.started = true;
-
     setTimeout(function() {
-      if (T.cursor > 0) T.element.classList.add(init.clsCursor);
-      T.typeText();
-    }, T.delayStart > 0 ? T.delayStart : 1);
-
-  };
+      if (T.cur > 0) T.cl.add(init.clsCursor);
+      typeText();
+    }, Math.max(1, T.dS));
 
 
-  // type text
-  Typist.prototype.typeText = function() {
+    // type text
+    function typeText() {
 
-    var
-      T = this,
-      txt = T.text[T.item],
-      len = txt.length,
-      next = (T.item + 1) % T.text.length,
-      delay = 0, str;
+      var
+        txt = T.text[T.i],
+        len = txt.length,
+        next = (T.i + 1) % T.text.length,
+        delay = 0, str;
 
-    T.char += T.dir;
+      T.c += T.d;
 
-    if (!T.char || T.char >= len) T.dir *= -1;
-    if (!T.char) T.item = next;
+      if (!T.c || T.c >= len) T.d *= -1;
+      if (!T.c) T.i = next;
 
-    str = txt.slice(0, T.char);
+      str = txt.slice(0, T.c);
 
-    if (T.dir === -1 && T.text.length > 1 && !T.text[next].indexOf(str)) {
-      T.item = next;
-      T.dir = 1;
-    }
-
-    // typing delay
-    if (T.char >= len) {
-
-      // end of sequence reached?
-      if (!next) T.repeat--;
-      delay = T.repeat ? T.delayEnd : 0;
-      if (T.sequence) {
-        var event = new CustomEvent('typist', { detail: { sequence: T.sequence }});
-        T.sequence = null;
-        T.element.removeAttribute('data-sequence');
-        document.dispatchEvent(event);
+      if (T.d === -1 && T.text.length > 1 && !T.text[next].indexOf(str)) {
+        T.i = next;
+        T.d = 1;
       }
 
-    }
-    else if (T.dir > 0) delay = Math.random() * (T.delayVariance * 2) - T.delayVariance + T.delayType;
-    else delay = T.delayType - T.delayVariance;
+      // typing delay
+      if (T.c >= len) {
 
-    // show text
-    requestAnimationFrame(function() {
+        // end of sequence reached?
+        if (!next) T.rep--;
+        delay = T.rep ? T.dE : 0;
+        if (T.seq) {
+          var event = new CustomEvent('typist', { detail: { seq: T.seq }});
+          T.seq = null;
+          T.node.removeAttribute('data-sequence');
+          d.dispatchEvent(event);
+        }
 
-      T.element.textContent = str;
-      if (delay) setTimeout(function() { T.typeText(); }, delay);
-      else if (T.cursor === 1) T.element.classList.remove(init.clsCursor);
+      }
+      else if (T.d > 0) delay = Math.random() * (T.dV * 2) - T.dV + T.dT;
+      else delay = T.dT - T.dV;
 
-    });
+      // show text
+      requestAnimationFrame(function() {
 
-  };
+        T.node.textContent = str;
+        if (delay) setTimeout(typeText, delay);
+        else if (T.cur === 1) T.cl.remove(init.clsCursor);
 
+      });
 
-  // fetch text items to type
-  Typist.prototype.getText = function() {
-
-    var text = [], child = this.element.children, e;
-
-    for (e = 0; e < child.length; e++) addText(child[e]);
-    if (!text.length) addText(this.element);
-
-    return text.length ? text : null;
-
-    function addText(e) {
-      var t = e.textContent.trim();
-      if (t) text.push(t);
     }
 
   };
 
 
   // public object
-  window.Typist = Typist;
+  w.Typist = Typist;
 
   // apply Typist to HTML elements
-  window.addEventListener('DOMContentLoaded', function() {
+  wa('DOMContentLoaded', function() {
 
-    var typistElement = document.querySelectorAll(init.element);
+    var typistElement = d.querySelectorAll(init.element);
     for (var t = 0; t < typistElement.length; t++) new Typist({ element: typistElement[t] });
 
   }, false);

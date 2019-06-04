@@ -18,8 +18,8 @@ Please use the code as you wish. [Tweet me @craigbuckler](https://twitter.com/cr
 The page must load the CSS and JavaScript. It can be placed anywhere but, typically, the CSS is loaded in the `<head>` and the JS is loaded just before the closing `</body>` tag:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.1/dist/typist.css">
-<script src="https://cdn.jsdelivr.net/npm/htmltypist.js@1.0.1/dist/typist.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/htmltypist.js/dist/typist.css">
+<script src="https://cdn.jsdelivr.net/npm/htmltypist.js/dist/typist.js"></script>
 ```
 
 CDN URLs are shown above but you can also `npm i htmltypist.js` to install via npm and use a bundler.
@@ -125,3 +125,15 @@ A typist class is applied to all elements being typed, so global styles can be a
 1. Default settings can be changed in the init variable.
 1. Older browsers (IE10 and below) show all text and do not animate.
 1. IE11 does not support data-sequence names and data-delay-start="-1" to animate when in view.
+
+
+## Version history
+
+### v1.1.0, 4 June 2019
+
+* improved loading and IntersectionObserver
+* reduced file size
+
+### v1.0.1, 30 May 2019
+
+* initial release
