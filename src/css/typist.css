@@ -1,5 +1,5 @@
 /* typist CSS */
-.typist.cursor::after {
+.cursor::after {
   content: '|';
   font-weight: 600;
   color: #c00;

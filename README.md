@@ -6,10 +6,10 @@ typist.js shows a typing effect which can be applied to any HTML element or pare
 
 Please use the code as you wish. [Tweet me @craigbuckler](https://twitter.com/craigbuckler) if you find it useful and [donate toward development](https://gum.co/OWTuG) if you use it commercially.
 
-* lightweight: 2,600 bytes of JavaScript, 160 bytes of optional CSS
+* lightweight: 2,800 bytes of JavaScript, 160 bytes of optional CSS
 * no external dependencies - works with any framework
-* easy to configure from HTML or JavaScript
-* works in all modern browsers (IE11+)
+* easy to configure from HTML
+* works in all modern browsers
 * progressively-enhanced to avoid failure in older browsers.
 
 
@@ -24,16 +24,16 @@ The page must load the CSS and JavaScript. It can be placed anywhere but, typica
 
 CDN URLs are shown above but you can also `npm i htmltypist.js` to install via npm and use a bundler.
 
-To apply a typing effect to any element, add a `data-typist` attribute:
+To apply a typing effect to any element, add `class="typist"` to any element:
 
 ```html
-<p data-typist="">Type and retype this paragraph forever!</p>
+<p class="typist">Type and retype this paragraph forever!</p>
 ```
 
-Pass a numeric value to the attribute to retype that number of times:
+A number of data attributes are available. For example, set `data-typist-repeat="1"` to type once only:
 
 ```html
-<p data-typist="1">This paragraph is typed once.</p>
+<p class="typist" data-typist-repeat="1">This paragraph is typed once.</p>
 ```
 
 
@@ -42,7 +42,7 @@ Pass a numeric value to the attribute to retype that number of times:
 When an element has two or more child elements, their text is typed in sequence:
 
 ```html
-<p data-typist="">
+<p class="typist">
   <span>This is typed first.</span>
   <span>This is typed second.</span>
   <span>This is typed third.</span>
@@ -54,37 +54,38 @@ When an element has two or more child elements, their text is typed in sequence:
 
 ## JavaScript usage
 
-typist.js can be dynamically applied in JavaScript by passing a single element in an option object:
+typist.js can be dynamically applied in JavaScript by passing a single element to a new `Typist` object:
 
 ```js
-new Typist({
-  element: document.getElementById('myelement')
-});
+new Typist( document.getElementById('myelement') );
 ```
 
 
 ## typist.js options
 
-The following options can be set as HTML5 attributes or JavaScript object options:
+The following options can be set as HTML5 attributes on any child element or the parent to set across all child elements:
 
-|HTML5 attribute|JS object option|description|
-|-|-|-|
-|`data-typist=""`|`element: node`|set element(s) to type|
-|`data-typist="N"`|`typist: N`|repeat typing N times. Omit to repeat forever (the default).|
-|`data-cursor="N"`|`cursor: N`|set 0 for no cursor, 1 to show cursor until typing completes, or 2 to show cursor forever (default 1)|
-|`data-delay-start="N"`|`delayStart: N`|delay typing for N milliseconds or pass -1 to delay typing until the element is scrolled into view (default 0)|
-|`data-delay-end="N"`|`delayEnd: N`|pause for N milliseconds before typing the next item (default 2000)|
-|`data-delay-type="N"`|`delayType: N`|pause for N milliseconds between each character (default 80)|
-|`data-delay-variance="N"`|`delayVariance: N`|randomly vary the typing speed by N milliseconds (default 50 - each character therefore appears at 30ms to 130ms intervals)|
-|`data-sequence="NAME"`|`delaySequence: NAME`|elements with the same NAME are typed in order - each will complete one animation before the next element is typed|
+|HTML5 attribute|description|
+|-|-|
+|`class="typist"`|set element to type|
+|`data-typist-repeat="N"`|repeat typing N times (default: repeat forever)|
+|`data-typist-delay-start="M"`|delay typing for M milliseconds after the element is scrolled into view (0)|
+|`data-typist-delay-type="M"`|pause for M milliseconds between each character (100)|
+|`data-typist-delay-delete="M"`|pause for M milliseconds between delete keypresses (50)|
+|`data-typist-delay-vary="F"`|randomly vary the typing speed (0.5 - characters are therefore typed between 50ms and 150ms)|
+|`data-typist-delay-end="M"`|pause for M milliseconds before typing the next item (2000)|
+|`data-typist-delete="N"`|0 to retain existing text where possible, 1 to delete all (0)|
+|`data-typist-cursor="CLASS"`|cursor style CSS class (cursor)|
+|`data-typist-cursor-show="N"`|0 for no cursor, 1 to show cursor until typing completes, 2 to show cursor forever (1)|
+|`data-typist-sequence="NAME"`|type elements in page DOM order - each completes one animation before the next element is typed|
 
 The following named sequence example types each list item in turn when the first is scrolled into view:
 
 ```html
 <ul>
-  <li data-typist="1" data-sequence="mylist" data-delay-start="-1">item one</li>
-  <li data-typist="1" data-sequence="mylist">item two</li>
-  <li data-typist="1" data-sequence="mylist">item three</li>
+  <li class="typist" data-typist-repeat="1" data-typist-sequence="mylist">item one</li>
+  <li class="typist" data-typist-repeat="1" data-typist-sequence="mylist">item two</li>
+  <li class="typist" data-typist-repeat="1" data-typist-sequence="mylist">item three</li>
 </ul>
 ```
 
@@ -92,26 +93,12 @@ The following code types text three times using a delay of 300-500ms between cha
 
 ```html
 <p
-  data-typist="3"
-  data-delay-start="-1"
-  data-delay-type="400"
-  data-delay-variance="100">This will be typed.</p>
+  class="typist"
+  data-typist-repeat="3"
+  data-typist-delay-type="400"
+  data-typist-delay-vary="0.25">This will be typed.</p>
 ```
 
-This alternative is functionally identical:
-
-```html
-<p id="myelement">This will be typed.</p>
-<script>
-new Typist({
-  element: document.getElementById('myelement'),
-  typist: 3,
-  delayStart: -1,
-  delayType: 400,
-  delayVariance: 100
-});
-</script>
-```
 
 ## CSS options
 
@@ -122,12 +109,19 @@ A typist class is applied to all elements being typed, so global styles can be a
 
 ## Usage notes
 
-1. Default settings can be changed in the init variable.
-1. Older browsers (IE10 and below) show all text and do not animate.
-1. IE11 does not support data-sequence names and data-delay-start="-1" to animate when in view.
+1. Default settings can be changed in the propDefault variable.
+1. Older browsers (IE11 and below) show all text and do not animate.
 
 
 ## Version history
+
+### v2.0.0, 20 June 2019
+
+* typing factors can be overridden on child elements
+* new deletion delay
+* improved performance, only types when in view
+* removed IE support
+* simpler to use, but incompatible with v1.x
 
 ### v1.1.0, 4 June 2019
 

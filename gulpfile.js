@@ -23,11 +23,15 @@ const
         toplevel: true
       },
       compress: {
+        passes: 5,
         drop_console: true
       },
       output: {
         quote_style: 1
-      }
+      },
+      ecma: 5,
+      ie8: false,
+      module: false
     }
   };
 

@@ -13,15 +13,15 @@
 
   <article>
 
-    <h1 data-typist="1" data-sequence="start">typist.js</h1>
+    <h1 class="typist" data-typist-repeat="1" data-typist-cursor-show="2" data-typist-sequence="intro">typist.js</h1>
 
     <p><a href="https://github.com/craigbuckler/typist.js"><strong>GitHub</strong></a> | <a href="https://www.npmjs.com/package/htmltypist.js"><strong>npm</strong></a> | <a href="https://gum.co/OWTuG"><strong>donate</strong></a> | <a href="https://twitter.com/craigbuckler">@craigbuckler</a> | <a href="https://craigbuckler.com/">craigbuckler.com</a></p>
 
-    <p data-typist="" data-sequence="start">
+    <p class="typist" data-typist-sequence="intro">
       <span>typist.js shows a typing effect.</span>
       <span>typist.js works on any website.</span>
       <span>typist.js is lightweight.</span>
-      <span>typist.js is easy to configure from HTML or JavaScript.</span>
+      <span>typist.js is easy to configure from HTML.</span>
     </p>
 
     <p>typist.js can be applied to any HTML element or parent element to type the content.</p>
@@ -29,11 +29,11 @@
     <p>Please use the code as you wish. <a href="https://twitter.com/craigbuckler">Tweet me @craigbuckler</a> if you find it useful and <a href="https://gum.co/OWTuG">donate toward development</a> if you use it commercially.</p>
 
     <ul>
-      <li data-typist="1" data-delay-start="-1" data-sequence="benefit">lightweight: 2,600 bytes of JavaScript, 160 bytes of optional CSS</li>
-      <li data-typist="1" data-sequence="benefit">no external dependencies - works with any framework</li>
-      <li data-typist="1" data-sequence="benefit">easy to configure from HTML or JavaScript</li>
-      <li data-typist="1" data-sequence="benefit">works in all modern browsers (IE11+)</li>
-      <li data-typist="1" data-sequence="benefit">progressively-enhanced to avoid failure in older browsers.</li>
+      <li class="typist" data-typist-repeat="1" data-typist-sequence="benefit" data-typist-delay-type="50" data-delay-start="2000">lightweight: 2,800 bytes of JavaScript, 160 bytes of optional CSS</li>
+      <li class="typist" data-typist-repeat="1" data-typist-sequence="benefit" data-typist-delay-type="50">no external dependencies - works with any framework</li>
+      <li class="typist" data-typist-repeat="1" data-typist-sequence="benefit" data-typist-delay-type="50">easy to configure from HTML</li>
+      <li class="typist" data-typist-repeat="1" data-typist-sequence="benefit" data-typist-delay-type="50">works in all modern browsers</li>
+      <li class="typist" data-typist-repeat="1" data-typist-sequence="benefit" data-typist-delay-type="50">progressively-enhanced to avoid failure in older browsers.</li>
     </ul>
 
     <h2>Basic example</h2>
@@ -45,25 +45,25 @@
 
     <p>CDN URLs are shown above but you can also <code>npm i htmltypist.js</code> to install via npm and use a bundler.</p>
 
-    <p>To apply a typing effect to any element, add a <code>data-typist</code> attribute:</p>
+    <p>To apply a typing effect to any element, add <code>class="typist"</code> to any element:</p>
 
-    <pre><code>&lt;p data-typist=&quot;&quot;&gt;Type and retype this paragraph forever!&lt;/p&gt;</code></pre>
+    <pre><code>&lt;p class=&quot;typist&quot;&gt;Type and retype this paragraph forever!&lt;/p&gt;</code></pre>
 
-    <p data-typist="">Type and retype this paragraph forever!</p>
+    <p class="typist">Type and retype this paragraph forever!</p>
 
-    <p>Pass a numeric value to the attribute to retype that number of times:</p>
+    <p>A number of <code>data</code> attributes are available. For example, set <code>data-typist-repeat="1"</code> to type once only:</p>
 
-    <pre><code>&lt;p data-typist=&quot;1&quot;&gt;This paragraph is typed once.&lt;/p&gt;</code></pre>
+    <pre><code>&lt;p class=&quot;typist&quot; data-typist-repeat=&quot;1&quot;&gt;This paragraph is typed once.&lt;/p&gt;</code></pre>
 
-    <p data-typist="1">This paragraph is typed once.</p>
+    <p class="typist" data-typist-repeat="1">This paragraph is typed once.</p>
 
     <h2>Multiple elements</h2>
 
     <p>When an element has two or more child elements, their text is typed in sequence:</p>
 
-    <pre><code>&lt;p data-typist=&quot;&quot;&gt;&#10;  &lt;span&gt;This is typed first.&lt;/span&gt;&#10;  &lt;span&gt;This is typed second.&lt;/span&gt;&#10;  &lt;span&gt;This is typed third.&lt;/span&gt;&#10;&lt;/p&gt;</code></pre>
+    <pre><code>&lt;p class=&quot;typist&quot;&gt;&#10;  &lt;span&gt;This is typed first.&lt;/span&gt;&#10;  &lt;span&gt;This is typed second.&lt;/span&gt;&#10;  &lt;span&gt;This is typed third.&lt;/span&gt;&#10;&lt;/p&gt;</code></pre>
 
-    <p data-typist="">
+    <p class="typist">
       <span>This is typed first.</span>
       <span>This is typed second.</span>
       <span>This is typed third.</span>
@@ -73,22 +73,19 @@
 
     <h2>JavaScript usage</h2>
 
-    <p>typist.js can be dynamically applied in JavaScript by passing a single element in an option object:</p>
+    <p>typist.js can be dynamically applied in JavaScript by passing a single element to a new <code>Typist</code> object:</p>
 
-    <pre><code>new Typist({
-  element: document.getElementById('myelement')
-});</code></pre>
+    <pre><code>new Typist( document.getElementById('myelement') );</code></pre>
 
     <h2>typist.js options</h2>
 
-    <p>The following options can be set as HTML5 attributes or JavaScript object options:</p>
+    <p>The following options can be set as HTML5 attributes on any child element or the parent to set across all child elements:</p>
 
     <table summary="typist.js options">
 
       <thead>
         <tr>
           <th>HTML5 attribute</th>
-          <th>JS object option</th>
           <th>description</th>
         </tr>
       </thead>
@@ -96,51 +93,58 @@
       <tbody>
 
         <tr>
-          <td><code>data-typist=""</code></td>
-          <td><code>element: node</code></td>
-          <td>set element(s) to type</td>
+          <td><code>class="typist"</code></td>
+          <td>set element to type</td>
         </tr>
 
         <tr>
-          <td><code>data-typist="N"</code></td>
-          <td><code>typist: N</code></td>
-          <td>repeat typing N times. Omit to repeat forever (the default).</td>
+          <td><code>data-typist-repeat="N"</code></td>
+          <td>repeat typing N times (default: repeat forever)</td>
         </tr>
 
         <tr>
-          <td><code>data-cursor="N"</code></td>
-          <td><code>cursor: N</code></td>
-          <td>set 0 for no cursor, 1 to show cursor until typing completes, or 2 to show cursor forever (default 1)</td>
+          <td><code>data-typist-delay-start="M"</code></td>
+          <td>delay typing for M milliseconds after the element is scrolled into view (0)</td>
         </tr>
 
         <tr>
-          <td><code>data-delay-start="N"</code></td>
-          <td><code>delayStart: N</code></td>
-          <td>delay typing for N milliseconds or pass -1 to delay typing until the element is scrolled into view (default 0)</td>
+          <td><code>data-typist-delay-type="M"</code></td>
+          <td>pause for M milliseconds between each character (100)</td>
         </tr>
 
         <tr>
-          <td><code>data-delay-end="N"</code></td>
-          <td><code>delayEnd: N</code></td>
-          <td>pause for N milliseconds before typing the next item (default 2000)</td>
+          <td><code>data-typist-delay-delete="M"</code></td>
+          <td>pause for M milliseconds between delete keypresses (50)</td>
         </tr>
 
         <tr>
-          <td><code>data-delay-type="N"</code></td>
-          <td><code>delayType: N</code></td>
-          <td>pause for N milliseconds between each character (default 80)</td>
+          <td><code>data-typist-delay-vary="F"</code></td>
+          <td>randomly vary the typing speed (0.5 - characters are therefore typed between 50ms and 150ms)</td>
         </tr>
 
         <tr>
-          <td><code>data-delay-variance="N"</code></td>
-          <td><code>delayVariance: N</code></td>
-          <td>randomly vary the typing speed by N milliseconds (default 50 - each character therefore appears at 30ms to 130ms intervals)</td>
+          <td><code>data-typist-delay-end="M"</code></td>
+          <td>pause for M milliseconds before typing the next item (2000)</td>
         </tr>
 
         <tr>
-          <td><code>data-sequence="NAME"</code></td>
-          <td><code>delaySequence: NAME</code></td>
-          <td>elements with the same NAME are typed in order - each will complete one animation before the next element is typed</td>
+          <td><code>data-typist-delete="N"</code></td>
+          <td>0 to retain existing text where possible, 1 to delete all (0)</td>
+        </tr>
+
+        <tr>
+          <td><code>data-typist-cursor="CLASS"</code></td>
+          <td>cursor style CSS class (cursor)</td>
+        </tr>
+
+        <tr>
+          <td><code>data-typist-cursor-show="N"</code></td>
+          <td>0 for no cursor, 1 to show cursor until typing completes, 2 to show cursor forever (1)</td>
+        </tr>
+
+        <tr>
+          <td><code>data-typist-sequence="NAME"</code></td>
+          <td>type elements in page DOM order - each completes one animation before the next element is typed</td>
         </tr>
 
       </tbody>
@@ -149,15 +153,11 @@
 
     <p>The following named sequence example types each list item in turn when the first is scrolled into view:</p>
 
-    <pre><code>&lt;ul&gt;&#10;  &lt;li data-typist=&quot;1&quot; data-sequence=&quot;mylist&quot; data-delay-start=&quot;-1&quot;&gt;item one&lt;/li&gt;&#10;  &lt;li data-typist=&quot;1&quot; data-sequence=&quot;mylist&quot;&gt;item two&lt;/li&gt;&#10;  &lt;li data-typist=&quot;1&quot; data-sequence=&quot;mylist&quot;&gt;item three&lt;/li&gt;&#10;&lt;/ul&gt;</code></pre>
+    <pre><code>&lt;ul&gt;&#10;  &lt;li class=&quot;typist&quot; data-typist-repeat=&quot;1&quot; data-typist-sequence=&quot;mylist&quot;&gt;item one&lt;/li&gt;&#10;  &lt;li class=&quot;typist&quot; data-typist-repeat=&quot;1&quot; data-typist-sequence=&quot;mylist&quot;&gt;item two&lt;/li&gt;&#10;  &lt;li class=&quot;typist&quot; data-typist-repeat=&quot;1&quot; data-typist-sequence=&quot;mylist&quot;&gt;item three&lt;/li&gt;&#10;&lt;/ul&gt;</code></pre>
 
     <p>The following code types text three times using a delay of 300-500ms between characters once it appears in view:</p>
 
-    <pre><code>&lt;p&#10;  data-typist=&quot;3&quot;&#10;  data-delay-start=&quot;-1&quot; &#10;  data-delay-type=&quot;400&quot; &#10;  data-delay-variance=&quot;100&quot;&gt;This will be typed.&lt;/p&gt;</code></pre>
-
-    <p>This alternative is functionally identical:</p>
-
-    <pre><code>&lt;p id=&quot;myelement&quot;&gt;This will be typed.&lt;/p&gt;&#10;&lt;script&gt;&#10;new Typist({&#10;  element: document.getElementById(&apos;myelement&apos;),&#10;  typist: 3,&#10;  delayStart: -1,&#10;  delayType: 400,&#10;  delayVariance: 100&#10;});&#10;&lt;/script&gt;</code></pre>
+    <pre><code>&lt;p&#10;  class=&quot;typist&quot;&#10;  data-typist-repeat=&quot;3&quot;&#10;  data-typist-delay-type=&quot;400&quot;&#10;  data-typist-delay-vary=&quot;0.25&quot;&gt;This will be typed.&lt;/p&gt;</code></pre>
 
     <h2>CSS options</h2>
 
@@ -168,11 +168,8 @@
     <h2>Usage notes</h2>
 
     <ol>
-      <li>Default settings can be changed in the <code>init</code> variable.</li>
-
-      <li>Older browsers (IE10 and below) show all text and do not animate.</li>
-
-      <li>IE11 does not support <code>data-sequence</code> names and <code>data-delay-start="-1"</code> to animate when in view.</li>
+      <li>Default settings can be changed in the <code>propDefault</code> variable.</li>
+      <li>Older browsers (IE11 and below) show all text and do not animate.</li>
     </ol>
 
   </article>
